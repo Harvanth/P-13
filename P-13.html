@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HealthNest - Task Manager</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8f7;
+            margin: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #087f78;
+            color: white;
+            padding: 25px;
+        }
+
+        .container {
+            background-color: white;
+            width: 85%;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        h2 {
+            color: #087f78;
+        }
+
+        input {
+            width: 75%;
+            padding: 12px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #087f78;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #064e49;
+        }
+
+        li {
+            background-color: #e0f2ef;
+            padding: 12px;
+            margin: 10px;
+            border-radius: 5px;
+            list-style: none;
+            overflow-wrap: anywhere;
+        }
+
+        footer {
+            background-color: #064e49;
+            color: white;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>HealthNest</h1>
+        <p>Preventive Healthcare and Diagnostics</p>
+    </header>
+
+    <div class="container">
+
+        <h2>Health Task Manager</h2>
+
+        <p>Manage your daily health activities</p>
+
+        <!-- Input Box -->
+        <input type="text" id="taskInput" placeholder="Enter your health task">
+
+        <!-- Add Button -->
+        <button onclick="addTask()">Add Task</button>
+
+        <!-- Task List -->
+        <ul id="taskList"></ul>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 HealthNest. All Rights Reserved.</p>
+        <p>healthnest@gmail.com</p>
+    </footer>
+
+    <script>
+
+        // CRUD Array of Tasks 
+        let tasks = [];
+
+        // CREATE - Add Task 
+        function addTask() {
+
+            let input = document.getElementById("taskInput");
+            let task = input.value.trim();
+
+            if (task === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            tasks.push(task);
+
+            input.value = "";
+
+            displayTasks();
+        }
+
+        // READ - Display Tasks 
+        function displayTasks() {
+
+            let list = document.getElementById("taskList");
+
+            list.innerHTML = "";
+
+            tasks.forEach(function (task, index) {
+
+                let li = document.createElement("li");
+
+                let text = document.createElement("span");
+                text.textContent = task;
+
+                // UPDATE Button 
+                let editBtn = document.createElement("button");
+                editBtn.textContent = "Edit";
+
+                editBtn.onclick = function () {
+                    updateTask(index);
+                };
+
+                // DELETE Button 
+                let deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+
+                deleteBtn.onclick = function () {
+                    deleteTask(index);
+                };
+
+                li.appendChild(text);
+                li.appendChild(document.createElement("br"));
+                li.appendChild(editBtn);
+                li.appendChild(deleteBtn);
+
+                list.appendChild(li);
+
+            });
+        }
+
+        // UPDATE - Edit Task 
+        function updateTask(index) {
+
+            let newTask = prompt("Enter updated task:", tasks[index]);
+
+            if (newTask !== null && newTask.trim() !== "") {
+
+                tasks[index] = newTask.trim();
+
+                displayTasks();
+            }
+        }
+
+        // DELETE - Remove Task 
+        function deleteTask(index) {
+
+            tasks.splice(index, 1);
+
+            displayTasks();
+        }
+
+    </script>
+
+</body>
+
+</html>
